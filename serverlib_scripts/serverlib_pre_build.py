@@ -75,19 +75,19 @@ def get_current_library_path(project_dir=None):
         # Also try PROJECT_LIBDEPS_DIR
         lib_dir = env.get("PROJECT_LIBDEPS_DIR", None)
         if lib_dir:
-            # Look for arduionolibserver in libdeps
+            # Look for arduinolibserver in libdeps
             libdeps_path = Path(lib_dir)
             if libdeps_path.exists():
                 for platform_dir in libdeps_path.iterdir():
                     if platform_dir.is_dir():
                         for lib_dir in platform_dir.iterdir():
-                            if lib_dir.is_dir() and ("serverlib" in lib_dir.name.lower() or "arduionolibserver" in lib_dir.name.lower()):
+                            if lib_dir.is_dir() and ("serverlib" in lib_dir.name.lower() or "arduinolibserver" in lib_dir.name.lower()):
                                 if (lib_dir / "include").exists() and (lib_dir / "library.json").exists():
                                     try:
                                         lib_json_path = lib_dir / "library.json"
                                         with open(lib_json_path, 'r') as f:
                                             lib_data = json.load(f)
-                                            if lib_data.get("name") == "serverlib" or lib_data.get("name") == "arduionolibserver":
+                                            if lib_data.get("name") == "serverlib" or lib_data.get("name") == "arduinolibserver":
                                                 return lib_dir.resolve()
                                     except Exception:
                                         pass
@@ -109,7 +109,7 @@ def get_current_library_path(project_dir=None):
                     if lib_json_path.exists():
                         with open(lib_json_path, 'r') as f:
                             lib_data = json.load(f)
-                            if lib_data.get("name") == "serverlib" or lib_data.get("name") == "arduionolibserver":
+                            if lib_data.get("name") == "serverlib" or lib_data.get("name") == "arduinolibserver":
                                 return library_dir.resolve()
                 except Exception:
                     pass
@@ -122,15 +122,15 @@ def get_current_library_path(project_dir=None):
         libraries = find_all_libraries(project_dir)
         for lib_dir in libraries:
             lib_name = lib_dir.name
-            # Check for various naming patterns (serverlib, serverlib-src, arduionolibserver, etc.)
-            if "serverlib" in lib_name.lower() or "arduionolibserver" in lib_name.lower():
+            # Check for various naming patterns (serverlib, serverlib-src, arduinolibserver, etc.)
+            if "serverlib" in lib_name.lower() or "arduinolibserver" in lib_name.lower():
                 # Verify by checking for include/ directory and library.json
                 if (lib_dir / "include").exists() and (lib_dir / "library.json").exists():
                     try:
                         lib_json_path = lib_dir / "library.json"
                         with open(lib_json_path, 'r') as f:
                             lib_data = json.load(f)
-                            if lib_data.get("name") == "serverlib" or lib_data.get("name") == "arduionolibserver":
+                            if lib_data.get("name") == "serverlib" or lib_data.get("name") == "arduinolibserver":
                                 return lib_dir.resolve()
                     except Exception:
                         # If can't read library.json, still return if has include/
