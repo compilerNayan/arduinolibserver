@@ -8,17 +8,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Fetch dependencies
 include(FetchContent)
 
-# Fetch cppcore for StandardDefines.h
+# Fetch cpp_core for StandardDefines.h
 FetchContent_Declare(
-    cppcore
+    cpp_core
     GIT_REPOSITORY https://github.com/compilerNayan/cpp_core.git
     GIT_TAG        main  # Use the main branch
 )
-FetchContent_MakeAvailable(cppcore)
+FetchContent_MakeAvailable(cpp_core)
 
 # Run pre-build script during configuration (runs even if client creates own library)
 # This will run whenever this CMakeLists.txt is processed
-    # Note: cppcore is now available since FetchContent_MakeAvailable was called above
+    # Note: cpp_core is now available since FetchContent_MakeAvailable was called above
 find_program(PYTHON_EXECUTABLE python3 python)
 if(PYTHON_EXECUTABLE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/serverlib_scripts/serverlib_pre_build.py")
     # Get the client project directory (CMAKE_SOURCE_DIR is the top-level project source directory)
@@ -63,20 +63,20 @@ target_include_directories(serverlib INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
-# Add cppcore include directory (for StandardDefines.h)
+# Add cpp_core include directory (for StandardDefines.h)
 # Use BUILD_INTERFACE generator expression to properly handle FetchContent paths
-FetchContent_GetProperties(cppcore)
-if(cppcore_SOURCE_DIR)
+FetchContent_GetProperties(cpp_core)
+if(cpp_core_SOURCE_DIR)
     target_include_directories(serverlib INTERFACE
-        $<BUILD_INTERFACE:${cppcore_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${cpp_core_SOURCE_DIR}/include>
     )
 endif()
 
-# Link cppcore if it provides a target
-if(TARGET cppcore::cppcore)
-    target_link_libraries(serverlib INTERFACE cppcore::cppcore)
-elseif(TARGET cppcore)
-    target_link_libraries(serverlib INTERFACE cppcore)
+# Link cpp_core if it provides a target
+if(TARGET cpp_core::cpp_core)
+    target_link_libraries(serverlib INTERFACE cpp_core::cpp_core)
+elseif(TARGET cpp_core)
+    target_link_libraries(serverlib INTERFACE cpp_core)
 endif()
 
 # Add pre-build script execution
