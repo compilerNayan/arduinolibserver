@@ -1,0 +1,26 @@
+{
+  "name": "serverlib",
+  "version": "1.0.0",
+  "description": "HTTP TCP Server library for Arduino/ESP32 with IServer interface implementation",
+  "keywords": "http, tcp, server, network, webserver",
+  "authors": [
+    {
+      "name": "Nayan"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/compilerNayan/arduionolibserver.git"
+  },
+  "dependencies": {
+    "cppcore": "https://github.com/compilerNayan/cpp_core.git"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "frameworks": "arduino",
+  "platforms": "*",
+  "build": {
+    "extraScript": "serverlib_scripts/serverlib_pre_build.py"
+  }
+}
+
