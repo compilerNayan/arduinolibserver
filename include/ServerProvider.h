@@ -17,6 +17,8 @@ class ServerProvider {
     
     // Cached singleton instance of the default server
     Private Static IServerPtr defaultServerInstance_;
+    // Cached singleton instance of the second registered server (if any)
+    Private Static IServerPtr secondServerInstance_;
 
     /**
      * Register a server type with a factory function
@@ -94,8 +96,8 @@ class ServerProvider {
         auto it = serverFactories_.find(StdString(serverId));
         if (it != serverFactories_.end()) {
             serverFactories_.erase(it);
-            // Clear cached instance if it was from this server type
             defaultServerInstance_.reset();
+            secondServerInstance_.reset();
             return true;
         }
         return false;
@@ -115,6 +117,7 @@ class ServerProvider {
     Public Static Void Clear() {
         serverFactories_.clear();
         defaultServerInstance_.reset();
+        secondServerInstance_.reset();
     }
     
     /**
@@ -138,6 +141,23 @@ class ServerProvider {
         defaultServerInstance_ = serverFactories_.begin()->second();
         
         return defaultServerInstance_;
+    }
+
+    /**
+     * Get the second registered server (same lifecycle as default: cached singleton).
+     * @return IServerPtr to the second server instance, or nullptr if fewer than two servers are registered
+     */
+    Public Static IServerPtr GetSecondServer() {
+        if (secondServerInstance_ != nullptr) {
+            return secondServerInstance_;
+        }
+        if (serverFactories_.size() < 2) {
+            return nullptr;
+        }
+        auto it = serverFactories_.begin();
+        ++it;
+        secondServerInstance_ = it->second();
+        return secondServerInstance_;
     }
 };
 
