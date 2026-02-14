@@ -20,11 +20,11 @@ class SimpleHttpRequest : public IHttpRequest {
     Private StdString path_;
     Private StdString fullUrl_;
     Private StdString httpVersion_;
-    Private Map<StdString, StdString> queryParameters_;
-    Private Map<StdString, StdString> headers_;
-    Private Map<StdString, StdString> cookies_;
+    Private StdMap<StdString, StdString> queryParameters_;
+    Private StdMap<StdString, StdString> headers_;
+    Private StdMap<StdString, StdString> cookies_;
     Private StdString body_;
-    Private Vector<UInt8> bodyBytes_;
+    Private StdVector<UInt8> bodyBytes_;
     Private StdString clientIp_;
     Private UInt clientPort_;
     Private ULong timestamp_;
@@ -194,7 +194,7 @@ class SimpleHttpRequest : public IHttpRequest {
         return (it != queryParameters_.end()) ? it->second : StdString();
     }
     
-    Public Virtual const Map<StdString, StdString>& GetQueryParameters() const override {
+    Public Virtual const StdMap<StdString, StdString>& GetQueryParameters() const override {
         return queryParameters_;
     }
     
@@ -212,7 +212,7 @@ class SimpleHttpRequest : public IHttpRequest {
         return StdString();
     }
     
-    Public Virtual const Map<StdString, StdString>& GetHeaders() const override {
+    Public Virtual const StdMap<StdString, StdString>& GetHeaders() const override {
         return headers_;
     }
     
@@ -260,7 +260,7 @@ class SimpleHttpRequest : public IHttpRequest {
         return const_cast<CStdString&>(reinterpret_cast<const CStdString&>(body_));
     }
     
-    Public Virtual const Vector<UInt8>& GetBodyBytes() const override {
+    Public Virtual const StdVector<UInt8>& GetBodyBytes() const override {
         return bodyBytes_;
     }
     
@@ -283,7 +283,7 @@ class SimpleHttpRequest : public IHttpRequest {
         return (it != cookies_.end()) ? it->second : StdString();
     }
     
-    Public Virtual const Map<StdString, StdString>& GetCookies() const override {
+    Public Virtual const StdMap<StdString, StdString>& GetCookies() const override {
         return cookies_;
     }
     

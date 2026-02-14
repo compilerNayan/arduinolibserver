@@ -40,7 +40,7 @@ class IHttpResponse {
     /**
      * Get all headers as a map
      */
-    Public Virtual const Map<StdString, StdString>& GetHeaders() const = 0;
+    Public Virtual const StdMap<StdString, StdString>& GetHeaders() const = 0;
     
     /**
      * Check if a header exists
@@ -57,7 +57,7 @@ class IHttpResponse {
     /**
      * Get the response body as bytes/raw data
      */
-    Public Virtual const Vector<UInt8>& GetBodyBytes() const = 0;
+    Public Virtual const StdVector<UInt8>& GetBodyBytes() const = 0;
     
     /**
      * Get the Content-Type header value
@@ -81,7 +81,7 @@ class IHttpResponse {
     /**
      * Get all Set-Cookie headers as a map
      */
-    Public Virtual const Map<StdString, StdString>& GetSetCookies() const = 0;
+    Public Virtual const StdMap<StdString, StdString>& GetSetCookies() const = 0;
     
     /**
      * Check if a Set-Cookie header exists

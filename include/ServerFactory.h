@@ -14,7 +14,7 @@ class ServerFactory {
 
 
     // Static map to store factory functions for each server ID
-    Private Static Map<StdString, std::function<IServerPtr()>> serverFactories_;
+    Private Static StdMap<StdString, std::function<IServerPtr()>> serverFactories_;
 
 
     /**

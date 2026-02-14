@@ -46,7 +46,7 @@ class IHttpRequest {
     /**
      * Get all query parameters as a map
      */
-    Public Virtual const Map<StdString, StdString>& GetQueryParameters() const = 0;
+    Public Virtual const StdMap<StdString, StdString>& GetQueryParameters() const = 0;
     
     /**
      * Check if a query parameter exists
@@ -65,7 +65,7 @@ class IHttpRequest {
     /**
      * Get all headers as a map
      */
-    Public Virtual const Map<StdString, StdString>& GetHeaders() const = 0;
+    Public Virtual const StdMap<StdString, StdString>& GetHeaders() const = 0;
     
     /**
      * Check if a header exists
@@ -105,7 +105,7 @@ class IHttpRequest {
     /**
      * Get the request body as bytes/raw data
      */
-    Public Virtual const Vector<UInt8>& GetBodyBytes() const = 0;
+    Public Virtual const StdVector<UInt8>& GetBodyBytes() const = 0;
     
     /**
      * Get the Content-Type header value
@@ -127,7 +127,7 @@ class IHttpRequest {
     /**
      * Get all cookies as a map
      */
-    Public Virtual const Map<StdString, StdString>& GetCookies() const = 0;
+    Public Virtual const StdMap<StdString, StdString>& GetCookies() const = 0;
     
     /**
      * Check if a cookie exists

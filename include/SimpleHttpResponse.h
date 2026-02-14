@@ -19,10 +19,10 @@ class SimpleHttpResponse : public IHttpResponse {
     Private StdString httpVersion_;
     Private UInt statusCode_;
     Private StdString statusMessage_;
-    Private Map<StdString, StdString> headers_;
-    Private Map<StdString, StdString> setCookies_;
+    Private StdMap<StdString, StdString> headers_;
+    Private StdMap<StdString, StdString> setCookies_;
     Private StdString body_;
-    Private Vector<UInt8> bodyBytes_;
+    Private StdVector<UInt8> bodyBytes_;
     Private ULong timestamp_;
     Private StdString rawResponse_;
     Private StdString requestId_;
@@ -80,7 +80,7 @@ class SimpleHttpResponse : public IHttpResponse {
         CStdString& requestId, 
         CUInt statusCode,
         CStdString& statusMessage,
-        const Map<StdString, StdString>& headers,
+        const StdMap<StdString, StdString>& headers,
         CStdString& body
     ) 
         : httpVersion_("HTTP/1.1"), statusCode_(statusCode), statusMessage_(statusMessage), timestamp_(0) {
@@ -130,7 +130,7 @@ class SimpleHttpResponse : public IHttpResponse {
         return StdString();
     }
     
-    Public Virtual const Map<StdString, StdString>& GetHeaders() const override {
+    Public Virtual const StdMap<StdString, StdString>& GetHeaders() const override {
         return headers_;
     }
     
@@ -148,7 +148,7 @@ class SimpleHttpResponse : public IHttpResponse {
         return const_cast<CStdString&>(reinterpret_cast<const CStdString&>(body_));
     }
     
-    Public Virtual const Vector<UInt8>& GetBodyBytes() const override {
+    Public Virtual const StdVector<UInt8>& GetBodyBytes() const override {
         return bodyBytes_;
     }
     
@@ -171,7 +171,7 @@ class SimpleHttpResponse : public IHttpResponse {
         return (it != setCookies_.end()) ? it->second : StdString();
     }
     
-    Public Virtual const Map<StdString, StdString>& GetSetCookies() const override {
+    Public Virtual const StdMap<StdString, StdString>& GetSetCookies() const override {
         return setCookies_;
     }
     
