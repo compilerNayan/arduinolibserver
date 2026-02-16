@@ -8,6 +8,7 @@
  * Implementation of INetworkStatusProvider using std::atomic<bool>.
  * Writes are thread-safe; reads are lock-free (subscribers may see a stale value).
  */
+ /* @Component */
 class NetworkStatusProvider : public INetworkStatusProvider {
     Private std::atomic<bool> wifiConnected_{false};
     Private std::atomic<bool> internetConnected_{false};
