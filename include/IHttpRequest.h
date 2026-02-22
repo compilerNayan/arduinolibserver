@@ -3,6 +3,7 @@
 
 #include <StandardDefines.h>
 #include "HttpMethod.h"
+#include "HttpRequestSource.h"
 
 /**
  * Interface representing a complete HTTP request
@@ -206,26 +207,32 @@ class IHttpRequest {
      */
     Public Virtual CStdString& GetRequestId() const = 0;
     
+    /**
+     * Get the source of the request (LocalServer or CloudServer).
+     */
+    Public Virtual RequestSource GetRequestSource() const = 0;
+    
     // ========== Static Factory Method ==========
     
     /**
      * Parse raw HTTP request string and create IHttpRequest object
      * @param requestId The unique request ID (GUID) for this request
+     * @param source Source of the request (default LocalServer)
      * @param rawRequest The raw HTTP request string from IServer::ReceiveMessage()
      * @return IHttpRequestPtr (shared_ptr), or nullptr if parsing fails
      */
-    Static inline IHttpRequestPtr GetRequest(CStdString& requestId, CStdString& rawRequest);
+    Static inline IHttpRequestPtr GetRequest(CStdString& requestId, RequestSource source, CStdString& rawRequest);
 };
 
 // Include SimpleHttpRequest for inline implementation
 #include "SimpleHttpRequest.h"
 
 // Inline implementation
-inline IHttpRequestPtr IHttpRequest::GetRequest(CStdString& requestId, CStdString& rawRequest) {
+inline IHttpRequestPtr IHttpRequest::GetRequest(CStdString& requestId, RequestSource source, CStdString& rawRequest) {
     if (rawRequest.empty()) {
         return nullptr;
     }
-    return make_ptr<SimpleHttpRequest>(requestId, rawRequest);
+    return make_ptr<SimpleHttpRequest>(requestId, rawRequest, source);
 }
 
 #endif // IHTTPREQUEST_H

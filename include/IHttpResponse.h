@@ -2,6 +2,7 @@
 #define IHTTPRESPONSE_H
 
 #include <StandardDefines.h>
+#include "HttpRequestSource.h"
 
 /**
  * Interface representing a complete HTTP response
@@ -228,6 +229,11 @@ class IHttpResponse {
     Public Virtual CStdString& GetRequestId() const = 0;
     
     /**
+     * Get the source of the request/response (LocalServer or CloudServer).
+     */
+    Public Virtual RequestSource GetRequestSource() const = 0;
+    
+    /**
      * Set the request ID (GUID) for this response
      * Can be called after construction to set the request ID
      */
@@ -238,21 +244,22 @@ class IHttpResponse {
     /**
      * Create an IHttpResponse object with request ID and response body
      * @param requestId The unique request ID (GUID) for this response
+     * @param source Source of the request/response (default LocalServer)
      * @param body The response body content
      * @return IHttpResponsePtr (shared_ptr), or nullptr if requestId is empty
      */
-    Static inline IHttpResponsePtr GetResponse(CStdString& requestId, CStdString& body);
+    Static inline IHttpResponsePtr GetResponse(CStdString& requestId, RequestSource source, CStdString& body);
 };
 
 // Include SimpleHttpResponse for inline implementation
 #include "SimpleHttpResponse.h"
 
 // Inline implementation
-inline IHttpResponsePtr IHttpResponse::GetResponse(CStdString& requestId, CStdString& body) {
+inline IHttpResponsePtr IHttpResponse::GetResponse(CStdString& requestId, RequestSource source, CStdString& body) {
     if (requestId.empty()) {
         return nullptr;
     }
-    return make_ptr<SimpleHttpResponse>(requestId, body);
+    return make_ptr<SimpleHttpResponse>(requestId, source, body);
 }
 
 #endif // IHTTPRESPONSE_H

@@ -30,6 +30,7 @@ class SimpleHttpRequest : public IHttpRequest {
     Private ULong timestamp_;
     Private StdString rawRequest_;
     Private StdString requestId_;
+    Private RequestSource source_;
     
     Private StdString ToLower(CStdString& str) const {
         StdString result = str;
@@ -90,8 +91,8 @@ class SimpleHttpRequest : public IHttpRequest {
     }
 
 
-    Public SimpleHttpRequest(CStdString& requestId, CStdString& rawRequest) 
-        : method_(HttpMethod::GET), clientPort_(0), timestamp_(0) {
+    Public SimpleHttpRequest(CStdString& requestId, RequestSource source, CStdString& rawRequest) 
+        : method_(HttpMethod::GET), clientPort_(0), timestamp_(0), source_(source) {
         rawRequest_ = rawRequest;
         requestId_ = requestId;
         timestamp_ = static_cast<ULong>(std::time(nullptr));
@@ -347,6 +348,10 @@ class SimpleHttpRequest : public IHttpRequest {
     
     Public Virtual CStdString& GetRequestId() const override {
         return const_cast<CStdString&>(reinterpret_cast<const CStdString&>(requestId_));
+    }
+    
+    Public Virtual RequestSource GetRequestSource() const override {
+        return source_;
     }
     
     Public Void SetClientIp(CStdString& ip) { clientIp_ = ip; }
