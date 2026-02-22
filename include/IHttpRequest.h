@@ -232,7 +232,7 @@ inline IHttpRequestPtr IHttpRequest::GetRequest(CStdString& requestId, RequestSo
     if (rawRequest.empty()) {
         return nullptr;
     }
-    return make_ptr<SimpleHttpRequest>(requestId, rawRequest, source);
+    return make_ptr<SimpleHttpRequest>(requestId, source, rawRequest);
 }
 
 #endif // IHTTPREQUEST_H
